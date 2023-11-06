@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { ChevronDown } from "lucide-react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { generateAvatarURL } from "@cfx-kit/wallet-avatar"
 
 import { Button, ButtonProps } from "@/components/ui/button"
 
@@ -10,12 +11,14 @@ interface CustomConnectButtonProps extends ButtonProps {
   label?: string
   showBalance?: boolean
   chainStatus?: "full" | "icon" | "name" | "none"
+  avatar?: boolean
 }
 
 export const CustomConnectButton: React.FC<CustomConnectButtonProps> = ({
   label = "Connect Wallet",
   showBalance = true,
   chainStatus = "full",
+  avatar,
   variant = "default",
   ...buttonProps
 }) => {
@@ -112,10 +115,21 @@ export const CustomConnectButton: React.FC<CustomConnectButtonProps> = ({
                     variant={variant}
                     {...buttonProps}
                   >
-                    {account.displayName}
-                    {showBalance && account.displayBalance
-                      ? ` (${account.displayBalance})`
-                      : ""}
+                    {avatar && (
+                      <Image
+                        src={generateAvatarURL(account.address)}
+                        alt="Avatar"
+                        width={25}
+                        height={25}
+                        className="rounded-full mr-1"
+                      />
+                    )}
+                    <span>{account.displayName}</span>
+                    <span>
+                      {showBalance && account.displayBalance
+                        ? ` (${account.displayBalance})`
+                        : ""}
+                    </span>
                     <ChevronDown />
                   </Button>
                 </div>
