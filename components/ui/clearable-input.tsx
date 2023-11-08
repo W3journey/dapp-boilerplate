@@ -29,7 +29,7 @@ const ClearInput = React.forwardRef<HTMLInputElement, ClearInputProps>(
           ref={ref}
           {...props}
         />
-        <Button variant="ghost" onClick={onClear}>
+        <Button variant="ghost" onClick={onClear} type="button">
           {text ? text : <Icon className="w-4 h-4" />}
         </Button>
       </div>
